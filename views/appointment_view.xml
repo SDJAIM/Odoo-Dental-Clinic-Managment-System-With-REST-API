@@ -6,19 +6,19 @@
         <field name="name">patient.appointment.calendar</field>
         <field name="model">patient.appointment</field>
         <field name="arch" type="xml">
-            <calendar string="Clinic Appointment" date_start="start" date_stop="stop" date_delay="duration" all_day="allday" event_open_popup="true" color="user_id">
+            <calendar string="Clinic Appointment" date_start="start" date_stop="stop" date_delay="duration" mode="month" all_day="allday" event_open_popup="true" color="user_id">
                 <field name="user_id"/>
             </calendar>
 
         </field>
     </record>
 
-    <record id="view_patient_appointment_tree" model="ir.ui.view">
-        <field name="name">patient.appointment.tree</field>
+    <record id="view_patient_appointment_list" model="ir.ui.view">
+        <field name="name">patient.appointment.list</field>
         <field name="model">patient.appointment</field>
         <field name="arch" type="xml">
-            <tree>
-                
+            <list>
+
                 <field name="appointment_serial" readonly="1"/>
                 <field name="start"/>
                 <field name="patient_id"/>
@@ -27,17 +27,17 @@
                 <field name="doctor_id"/>
 
                 <field name="user_id"/>
-            </tree>
+            </list>
 
         </field>
     </record>
 
-        <record id="view_patient_appointment_form" model="ir.ui.view">
+    <record id="view_patient_appointment_form" model="ir.ui.view">
         <field name="name">patient.appointment.form</field>
         <field name="model">patient.appointment</field>
         <field name="arch" type="xml">
             <form>
-                
+
                 <header>
                     <field name="appointment_status" widget="statusbar" statusbar_visible="draft,confirm,in_exam,completed_exam,completed_appointment,cancelled"/>
 
@@ -50,12 +50,12 @@
                     </div>
                     <group>
                         <group>
-                        <field name="patient_id"/>
-                        <field name="contact_number"/>
-                        <field name="appointment_type"/>
-                        <field name="doctor_id"/>
-                        <field name="chief_complaints" placeholder="Other Appointment Notes or Complaints..."/>
-                        <field name="user_id"/>
+                            <field name="patient_id"/>
+                            <field name="contact_number"/>
+                            <field name="appointment_type"/>
+                            <field name="doctor_id"/>
+                            <field name="chief_complaints" placeholder="Other Appointment Notes or Complaints..."/>
+                            <field name="user_id"/>
                         </group>
                         <group>
                             <span class="myAddition"/>
@@ -63,19 +63,19 @@
                     </group>
 
                     <group>
+                        <button name="action_update_chart" type="object" string="Update Chart" class="oe_highlight"/>
 
-                            <field t-on-click="updateChart" name="procedure_line_id">
-                                <tree editable="bottom">
-                                    <field class="tooth_number_class" name="tooth_no"/>
-                                    <field name="service_item_id" readonly="0" />
-                                    <field name="cost" readonly="1" invisible="0"/>
+                        <field name="procedure_line_id">
+                            <tree editable="bottom" string="Procedures">
+                                <field name="tooth_no"/>
+                                <field name="service_item_id"/>
+                                <field name="cost"/>
                             </tree>
                         </field>
-
                     </group>
-                        
-                    
-                    
+
+
+
 
                     <notebook>
                         <page string="Prescription" name="prescription_view">
@@ -102,8 +102,8 @@
         <field name="name">Appointments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">patient.appointment</field>
-<!--        <field name="view_id" ref="view_combined_menu_item_tree"/>-->
-        <field name="view_mode">calendar,tree,form</field>
+        <!--        <field name="view_id" ref="view_combined_menu_item_list"/>-->
+        <field name="view_mode">calendar,list,form</field>
     </record>
 
 
@@ -125,19 +125,12 @@
         </field>
     </record> -->
 
-        <!-- main menu entry that refers to sales part inside the UI -->
-    <menuitem id="apt_root"
-              name="Appointments"
-              action="action_patient_appointment_calendar"
-              sequence="30"/>
+    <!-- main menu entry that refers to sales part inside the UI -->
+    <menuitem id="apt_root" name="Appointments" action="action_patient_appointment_calendar" sequence="30"/>
 
-    <menuitem id="apt_reservations_sub_menu"
-              name="Appointments Table"
-              parent="apt_root"
-              action="action_patient_appointment_calendar"
-              sequence="31"/>
-       
-              
+    <menuitem id="apt_reservations_sub_menu" name="Appointments Table" parent="apt_root" action="action_patient_appointment_calendar" sequence="31"/>
+
+
 
 
 </odoo>

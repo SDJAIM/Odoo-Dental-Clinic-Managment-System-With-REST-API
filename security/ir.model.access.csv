@@ -1,32 +1,21 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_patient_appointment_read_only,access.menu.item,dental_clinic.model_patient_appointment,,1,0,0,0
-access_patient_appointment_full_read_write,access.menu.item,dental_clinic.model_patient_appointment,,1,1,0,0
-access_patient_appointment_full_perm,access.menu.item,dental_clinic.model_patient_appointment,,1,1,1,1
+access_patient_appointment_user,Patient Appointment User,model_patient_appointment,dental_clinic.group_dental_user,1,1,1,0
+access_patient_appointment_manager,Patient Appointment Manager,model_patient_appointment,dental_clinic.group_dental_manager,1,1,1,1
 
-access_dental_procedure_line_read_only,access.menu.item,dental_clinic.model_dental_procedure_line,,1,0,0,0
-access_dental_procedure_line_full_read_write,access.menu.item,dental_clinic.model_dental_procedure_line,,1,1,0,0
-access_dental_procedure_line_full_perm,access.menu.item,dental_clinic.model_dental_procedure_line,,1,1,1,1
+access_dental_procedure_line_user,Dental Procedure User,model_dental_procedure_line,dental_clinic.group_dental_user,1,1,1,0
+access_dental_procedure_line_manager,Dental Procedure Manager,model_dental_procedure_line,dental_clinic.group_dental_manager,1,1,1,1
 
-access_patient_patient_read_only,access.menu.item,dental_clinic.model_patient_patient,,1,0,0,0
-access_patient_patient_full_read_write,access.menu.item,dental_clinic.model_patient_patient,,1,1,0,0
-access_patient_patient_full_perm,access.menu.item,dental_clinic.model_patient_patient,,1,1,1,1
+access_patient_user,Patient User,model_patient_patient,dental_clinic.group_dental_user,1,1,1,0
+access_patient_manager,Patient Manager,model_patient_patient,dental_clinic.group_dental_manager,1,1,1,1
 
-access_clinic_doctor_read_only,access.menu.item,dental_clinic.model_clinic_doctor,,1,0,0,0
-access_clinic_doctor_full_read_write,access.menu.item,dental_clinic.model_clinic_doctor,,1,1,0,0
-access_clinic_doctor_full_perm,access.menu.item,dental_clinic.model_clinic_doctor,,1,1,1,1
+access_clinic_doctor_user,Clinic Doctor User,model_clinic_doctor,dental_clinic.group_dental_user,1,1,1,0
+access_clinic_doctor_manager,Clinic Doctor Manager,model_clinic_doctor,dental_clinic.group_dental_manager,1,1,1,1
 
-access_appointment_attachment_line_read_only,access.menu.item,dental_clinic.model_appointment_attachment_line,,1,0,0,0
-access_appointment_attachment_line_full_read_write,access.menu.item,dental_clinic.model_appointment_attachment_line,,1,1,0,0
-access_appointment_attachment_line_full_perm,access.menu.item,dental_clinic.model_appointment_attachment_line,,1,1,1,1
+access_appointment_attachment_user,Attachment User,model_appointment_attachment_line,dental_clinic.group_dental_user,1,1,1,0
+access_appointment_attachment_manager,Attachment Manager,model_appointment_attachment_line,dental_clinic.group_dental_manager,1,1,1,1
 
-access_patient_prescription_read_only,access.menu.item,dental_clinic.model_patient_prescription,,1,0,0,0
-access_patient_prescription_full_read_write,access.menu.item,dental_clinic.model_patient_prescription,,1,1,0,0
-access_patient_prescription_full_perm,access.menu.item,dental_clinic.model_patient_prescription,,1,1,1,1
+access_patient_prescription_user,Prescription User,model_patient_prescription,dental_clinic.group_dental_user,1,1,1,0
+access_patient_prescription_manager,Prescription Manager,model_patient_prescription,dental_clinic.group_dental_manager,1,1,1,1
 
-access_patient_prescription_line_read_only,access.menu.item,dental_clinic.model_patient_prescription_line,,1,0,0,0
-access_patient_prescription_line_full_read_write,access.menu.item,dental_clinic.model_patient_prescription_line,,1,1,0,0
-access_patient_prescription_line_full_perm,access.menu.item,dental_clinic.model_patient_prescription_line,,1,1,1,1
-
-access_api_access_token_read_only,access.menu.item,dental_clinic.model_api_access_token,,1,0,0,0
-access_api_access_token_full_read_write,access.menu.item,dental_clinic.model_api_access_token,,1,1,0,0
-access_api_access_token_full_perm,access.menu.item,dental_clinic.model_api_access_token,,1,1,1,1
+access_api_access_token_user,API Token User,model_api_access_token,dental_clinic.group_dental_user,1,1,1,0
+access_api_access_token_manager,API Token Manager,model_api_access_token,dental_clinic.group_dental_manager,1,1,1,1

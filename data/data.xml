@@ -4,18 +4,18 @@
         <!-- Sequences for menu.item -->
         <record id="seq_patient_appointment" model="ir.sequence">
             <field name="name">Appointment Serial</field>
-            <field name="code">patient.appointment.sequence</field> <!-- unique -->
-            <field name="prefix">APT</field>
+            <field name="code">patient.appointment.sequence</field>
+            <field name="prefix">APT/</field>
             <field name="padding">6</field>
             <field name="implementation">no_gap</field>
             <field name="company_id" eval="False"/>
         </record>
 
-        <record id="seq_patient_appointment_prescription" model="ir.sequence">
-            <field name="name">Appointment Serial</field>
-            <field name="code">patient.appointment.prescription.sequence</field> <!-- unique -->
-            <field name="prefix">PRS</field>
-            <field name="padding">6</field>
+        <record id="seq_patient_prescription" model="ir.sequence">
+            <field name="name">Prescription Serial</field>
+            <field name="code">patient.appointment.prescription.sequence</field>
+            <field name="prefix">RX/</field>
+            <field name="padding">4</field>
             <field name="implementation">no_gap</field>
             <field name="company_id" eval="False"/>
         </record>
@@ -31,5 +31,9 @@
 
 
 
-    </data>
+    <record id="param_access_token_expiry" model="ir.config_parameter">
+      <field name="key">project_api.access_token_token_expiry_date_in</field>
+      <field name="value">86400</field>
+    </record>
+  </data>
 </odoo>

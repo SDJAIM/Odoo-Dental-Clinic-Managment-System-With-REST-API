@@ -53,3 +53,4 @@ def extract_arguments(limit="80", offset=0, order="id", domain="", fields=[]):
     if offset:
         offset = int(offset)
     return [expresions, fields, offset, limit, order]
+

@@ -3,11 +3,11 @@
 
     
     
-    <record id="view_patient_patient_tree" model="ir.ui.view">
-        <field name="name">patient.patient.tree</field>
+    <record id="view_patient_patient_list" model="ir.ui.view">
+        <field name="name">patient.patient.list</field>
         <field name="model">patient.patient</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="patient_serial" readonly="1"/>
                 <field name="patient_name"/>
                 <field name="age" readonly="1"/>
@@ -15,7 +15,7 @@
                 <field name="blood_type"/>
                 <field name="occupation"/>
                 <field name="marital_status"/>
-            </tree>
+            </list>
 
         </field>
     </record>
@@ -51,23 +51,14 @@
                     <notebook>
                         
                         <page string="Patient Questionnaire">
-                            <div>
-                                Do you take any anticoagulants?
-                                
-                                
-                            </div>
-                            <div>
+                            <group>
                                 <field name="qstn_1"/>
-                            </div>
-                            <field name="qstn_1_note" />
-                            <div>
-                                Do you have any immunological diseases?
-                            </div>
-                            <field name="qstn_2"/>
-                            <div>
-
-                            </div>
-                            <field name="qstn_2_note" attrs="{'invisible': [('qstn_2', '=', 'No')]}" />
+                                <field name="qstn_1_note"/>
+                            </group>
+                            <group>
+                                <field name="qstn_2"/>
+                                <field name="qstn_2_note" attrs="{'invisible': [('qstn_2', '=', 'no')]}"/>
+                            </group>
                         </page>
                         <page string="Medical Alerts">
                             <div>
@@ -78,10 +69,10 @@
                             <field name="qstn_2_note" readonly="1"/>
                         </page>
                         <page string="Patient Appointments" name="appointment_id">
-                            <field name="appointment_id"/>
+                            <field name="appointment_id" string="Appointments"/>
                         </page>
                         <page string="Patient Prescriptions">
-                            <field name="patient_prescriptions"/>
+                            <field name="patient_prescriptions" string="Prescriptions"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -95,12 +86,11 @@
     </record>
 
 
-    <record id="action_patient_patient_tree" model="ir.actions.act_window">
+    <record id="action_patient_patient_list" model="ir.actions.act_window">
         <field name="name">Patients</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">patient.patient</field>
-<!--        <field name="view_id" ref="view_combined_menu_item_tree"/>-->
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">form,list</field>
     </record>
 
 
@@ -127,7 +117,7 @@
     <menuitem id="apt_patient_sub_menu"
               name="Patients"
               parent="apt_root"
-              action="action_patient_patient_tree"
+              action="action_patient_patient_list"
               sequence="32"/>         
 
 

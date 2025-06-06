@@ -32,8 +32,8 @@ def validate_token(func):
 
 
 
-class AcessToken(http.Controller):
-    @http.route("/api/login", methods=["GET"], type="http", auth="none", csrf=False)
+class AccessToken(http.Controller):
+    @http.route("/api/auth/token", type="json", auth="public", methods=["POST"])
     def api_login(self, **post):
         """The token URL to be used for getting the access_token:
 
@@ -142,7 +142,7 @@ class AcessToken(http.Controller):
 
 
 
-    @http.route("/api/login/token_api_key", methods=["GET"], type="http", auth="none", csrf=False)
+    @http.route("/api/login/token_api_key", type="http", auth="none", methods=["GET"])
     def api_login_api_key(self, **post):
         # The request post body is empty the credetials maybe passed via the headers.
         headers = request.httprequest.headers
@@ -192,7 +192,7 @@ class AcessToken(http.Controller):
 
 
     @validate_token
-    @http.route("/api/clinic_appointment/create", methods=["POST"], type="http", auth="none", csrf=False)
+    @http.route("/api/clinic_appointment/create", type="http", auth="none", methods=["POST"])
     def create_appointment(self, **post):
         user_id = request.uid
         user_obj = request.env['res.users'].browse(user_id)
@@ -214,7 +214,7 @@ class AcessToken(http.Controller):
             )
 
     @validate_token
-    @http.route("/api/appointment/update", methods=["POST"], type="http", auth="none", csrf=False)
+    @http.route("/api/appointment/update", type="http", auth="none", methods=["POST"])
     def update_project(self, **post):
         user_id = request.uid
         user_obj = request.env['res.users'].browse(user_id)
@@ -239,7 +239,7 @@ class AcessToken(http.Controller):
     # )
 
     @validate_token
-    @http.route("/api/all_stages/read", methods=["POST"], type="http", auth="none", csrf=False)
+    @http.route("/api/all_stages/read", type="http", auth="none", methods=["POST"])
     def all_project_stages(self, **post):
         user_id = request.uid
         user_obj = request.env['res.users'].browse(user_id)
@@ -266,7 +266,7 @@ class AcessToken(http.Controller):
         )
 
     @validate_token
-    @http.route("/api/stage/read", methods=["POST"], type="http", auth="none", csrf=False)
+    @http.route("/api/stage/read", type="http", auth="none", methods=["POST"])
     def read_crm(self, **post):
         user_id = request.uid
         user_obj = request.env['res.users'].browse(user_id)
@@ -305,7 +305,7 @@ class AcessToken(http.Controller):
         )
 
     @validate_token
-    @http.route(["/api/unlinke/project"], methods=["DELETE"], type="http", auth="none", csrf=False)
+    @http.route("/api/unlinke/project", type="http", auth="none", methods=["DELETE"])
     def unlink_project(self, **post):
         user_id = request.uid
         user_obj = request.env['res.users'].browse(user_id)
@@ -333,3 +333,4 @@ class AcessToken(http.Controller):
     #         token.unlink()
     #     # Successful response:
     #     return valid_response([{"message": "access token %s successfully deleted" % (access_token,), "delete": True}])
+

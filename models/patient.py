@@ -1,8 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
-
-from datetime import date, timedelta
-
+from datetime import date
 
 
 class Patient(models.Model):
@@ -48,35 +46,19 @@ class Patient(models.Model):
 
     @api.depends('date_of_birth')
     def compute_age(self):
-        try:
-
-            age = date.today() - self.date_of_birth
-            age_in_years = age.days // 365.2425
-            self.age = str(age_in_years) + "Years Old"
-        except:
-            pass
+        for record in self:
+            if record.date_of_birth:
+                today = fields.Date.today()
+                delta = today - record.date_of_birth
+                years = delta.days // 365
+                record.age = f"{years} Years"
+            else:
+                record.age = False
         
-    @api.model
-    def create(self, vals):  # save button in the form view
-
-        if vals.get('patient_serial', _('New Patient')) == _('New Patient'):
-            vals['patient_serial'] = self.env['ir.sequence'].next_by_code('patient.sequence') or _('New Patient')
-        res = super(Patient, self).create(vals)
-        return res
-        # for rec in self:
-        #     # todo don't forget to clarify that both two following variables are updated on
-        #     # every change in sale order form
-        #     sale_line_count = 0
-        #     added_items_price_ordered_list = rec.order_line_id.mapped('price')
-        #     added_items_quantity_ordered_list = rec.order_line_id.mapped('qty')
-
-        #     item_price_multiplied_by_quantity = [price * qty for price, qty in
-        #                                          zip(added_items_price_ordered_list, added_items_quantity_ordered_list)]
-            
-        #     sale_total_value = sum(item_price_multiplied_by_quantity)
-
-            
-        #     print(item_price_multiplied_by_quantity) # a list that contains each line subtotal
-        #     print(rec.order_line_id.ids)
-        #     rec.order_total = sale_total_value
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('patient_serial', _('New Patient')) == _('New Patient'):
+                vals['patient_serial'] = self.env['ir.sequence'].next_by_code('patient.sequence') or _('New Patient')
+        return super().create(vals_list)
 

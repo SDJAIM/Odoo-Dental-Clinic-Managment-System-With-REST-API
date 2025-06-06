@@ -46,3 +46,4 @@ class DentalProcedureLine(models.Model):
     ], required=False, string="Tooth number", tracking=True)
     service_item_id = fields.Many2one('product.product', 'Procedure Name', domain=[('sale_ok', '=', True)], required=False, change_default=True)
     cost = fields.Float(related="service_item_id.lst_price", string='Procedure Cost', digits=0)
+

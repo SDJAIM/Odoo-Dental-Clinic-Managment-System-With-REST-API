@@ -1,7 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
-
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 
 
@@ -14,7 +13,7 @@ class PatientAppointment(models.Model):
 
     appointment_serial = fields.Char(string="Appointment Serial", required=True, copy=False, readonly=True, index=True, default=lambda self: _("New Appointment"))
     patient_id = fields.Many2one('patient.patient', string="Patient Name", tracking=True)
-    contact_number = fields.Char('Contact Number', tracking=True)
+    contact_number = fields.Char('Contact Number')
     appointment_status = fields.Selection([
         ('draft', 'Draft'),
         ('confirm', 'Appointment Confirmed'),
@@ -27,9 +26,10 @@ class PatientAppointment(models.Model):
     appointment_type = fields.Selection([
         ('reserve', 'Reserved Appointment'),
         ('in_person', 'Walk-in Appointment'),
-    ], required=False, string="Appointment Reservation Type", tracking=True)
+    ], required=False, string="Appointment Reservation Type")
     
-    doctor_id = fields.Many2one('clinic.doctor', string="Doctor Name", tracking=True)
+    doctor_id = fields.Many2one('clinic.doctor', string="Doctor Name", 
+        domain="[('is_available', '=', True)]")
 
     procedure_line_id = fields.One2many('dental.procedure.line', 'appointment_id', string='Procedures')
 
@@ -47,8 +47,7 @@ class PatientAppointment(models.Model):
         help="Start date of an event, without time for full days events")
 
     stop = fields.Datetime(
-        'Stop', required=True, tracking=True, default=lambda self: fields.Datetime.today() + timedelta(hours=0.5),
-        compute='_compute_stop', readonly=False, store=True,
+        'Stop', compute='_compute_stop', store=True, readonly=False,
         help="Stop date of an event, without time for full days events")
     
     allday = fields.Boolean('All Day', default=False)
@@ -87,13 +86,21 @@ class PatientAppointment(models.Model):
         for event in self.with_context(dont_notify=True):
             event.duration = self._get_duration(event.start, event.stop)
 
-    @api.model
-    def create(self, vals):  # save button in the form view
-
-        if vals.get('appointment_serial', _('New Appointment')) == _('New Appointment'):
-            vals['appointment_serial'] = self.env['ir.sequence'].next_by_code('patient.appointment.sequence') or _('New Appointment')
-        res = super(PatientAppointment, self).create(vals)
-        return res
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('appointment_serial', _('New Appointment')) == _('New Appointment'):
+                vals['appointment_serial'] = self.env['ir.sequence'].next_by_code('patient.appointment.sequence') or _('New Appointment')
+        return super().create(vals_list)
+        
+    def action_update_chart(self):
+        """Handle the 'Update Chart' button click"""
+        # Add your custom chart update logic here
+        # For now, we'll just return a reload action
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
     
     # allday = fields.Boolean('All Day', default=False)
     
@@ -279,6 +286,4 @@ class PatientAppointment(models.Model):
     #             event.update({**false_values, **event_values, **rrule_values})
     #         else:
     #             event.update(false_values)
-
-
 
